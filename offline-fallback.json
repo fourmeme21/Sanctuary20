@@ -1,0 +1,86 @@
+{
+  "_comment": "Sanctuary Offline Fallback — Rapor 3.2 Fallback Tablosu",
+  "version": "1.0",
+  "default": {
+    "sceneName": "Huzur Adası",
+    "tempo": 60,
+    "frequencySuggestion": 432,
+    "layers": [
+      { "id": "ambient-1", "type": "ambient",  "volume": 0.55 },
+      { "id": "binaural-1","type": "binaural", "volume": 0.25 }
+    ],
+    "breathPattern": { "inhale": 4, "hold": 2, "exhale": 6 }
+  },
+  "scenes": {
+    "Kaygılı": {
+      "sceneName": "Sakin Nefes",
+      "tempo": 52,
+      "frequencySuggestion": 396,
+      "layers": [
+        { "id": "ambient-1",  "type": "ambient",  "volume": 0.55 },
+        { "id": "binaural-1", "type": "binaural", "volume": 0.25 }
+      ],
+      "breathPattern": { "inhale": 4, "hold": 4, "exhale": 8 }
+    },
+    "Huzursuz": {
+      "sceneName": "Derin Huzur",
+      "tempo": 58,
+      "frequencySuggestion": 432,
+      "layers": [
+        { "id": "ambient-1",  "type": "ambient",  "volume": 0.60 },
+        { "id": "binaural-1", "type": "binaural", "volume": 0.20 }
+      ],
+      "breathPattern": { "inhale": 4, "hold": 2, "exhale": 6 }
+    },
+    "Yorgun": {
+      "sceneName": "Enerji Yenileme",
+      "tempo": 65,
+      "frequencySuggestion": 528,
+      "layers": [
+        { "id": "ambient-1", "type": "ambient", "volume": 0.50 },
+        { "id": "tone-1",    "type": "tone",    "volume": 0.30 }
+      ],
+      "breathPattern": { "inhale": 5, "hold": 2, "exhale": 5 }
+    },
+    "Mutsuz": {
+      "sceneName": "Işık Nefesi",
+      "tempo": 55,
+      "frequencySuggestion": 417,
+      "layers": [
+        { "id": "ambient-1",  "type": "ambient",  "volume": 0.60 },
+        { "id": "binaural-1", "type": "binaural", "volume": 0.30 }
+      ],
+      "breathPattern": { "inhale": 4, "hold": 2, "exhale": 7 }
+    },
+    "Sakin": {
+      "sceneName": "Odak Akışı",
+      "tempo": 70,
+      "frequencySuggestion": 40,
+      "layers": [
+        { "id": "ambient-1",  "type": "ambient",  "volume": 0.45 },
+        { "id": "binaural-1", "type": "binaural", "volume": 0.35 }
+      ],
+      "breathPattern": { "inhale": 4, "hold": 4, "exhale": 4 }
+    },
+    "Minnettar": {
+      "sceneName": "Kalp Rezonansı",
+      "tempo": 60,
+      "frequencySuggestion": 528,
+      "layers": [
+        { "id": "ambient-1",  "type": "ambient",  "volume": 0.55 },
+        { "id": "binaural-1", "type": "binaural", "volume": 0.30 }
+      ],
+      "breathPattern": { "inhale": 5, "hold": 3, "exhale": 6 }
+    },
+    "default": {
+      "sceneName": "Huzur Adası",
+      "tempo": 60,
+      "frequencySuggestion": 432,
+      "layers": [
+        { "id": "ambient-1",  "type": "ambient",  "volume": 0.55 },
+        { "id": "binaural-1", "type": "binaural", "volume": 0.25 }
+      ],
+      "breathPattern": { "inhale": 4, "hold": 2, "exhale": 6 }
+    }
+  }
+}

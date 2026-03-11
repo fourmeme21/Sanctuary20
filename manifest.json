@@ -1,0 +1,36 @@
+{
+  "name": "Sanctuary — Sleep & Neural Rest",
+  "short_name": "Sanctuary",
+  "description": "Science-based sound therapy for deep sleep, stress relief and mental clarity. Real-time granular synthesis, binaural beats and AI-guided breathing.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07071a",
+  "theme_color": "#050507",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMTIiIGZpbGw9IiMwNTA1MDciLz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjE0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDIwMSwxNjksMTEwLDAuMjUpIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMTAwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjAxLDE2OSwxMTAsMC4xOCkiIHN0cm9rZS13aWR0aD0iMSIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iNjQiIGZpbGw9InJnYmEoMjAxLDE2OSwxMTAsMC4wNikiLz4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iZG90R3JhZCIgY3g9IjQwJSIgY3k9IjM1JSIgcj0iNjAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YwZDA5MCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjOWE5NmUiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9Imdsb3dHcmFkIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSJyZ2JhKDIwMSwxNjksMTEwLDAuNSkiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSJyZ2JhKDIwMSwxNjksMTEwLDApIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogIDwvZGVmcz4KICA8Y2lyY2xlIGN4PSIyNTYiIGN5PSIyNTYiIHI9IjQ0IiBmaWxsPSJ1cmwoI2dsb3dHcmFkKSIvPgogIDxjaXJjbGUgY3g9IjI1NiIgY3k9IjI1NiIgcj0iMTgiIGZpbGw9InVybCgjZG90R3JhZCkiLz4KICA8ZWxsaXBzZSBjeD0iMjQ5IiBjeT0iMjQ5IiByeD0iNyIgcnk9IjUiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zNSkiIHRyYW5zZm9ybT0icm90YXRlKC0yMCAyNDkgMjQ5KSIvPgogIDx0ZXh0IHg9IjI1NiIgeT0iNDA2IiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZvbnQtd2VpZ2h0PSIzMDAiIGxldHRlci1zcGFjaW5nPSIxMCIgZmlsbD0icmdiYSgyMDEsMTY5LDExMCwwLjc1KSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+U0FOQ1RVQVJZPGdvdGV4dD4KPC9zdmc+Cg==",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "lifestyle", "music"],
+  "prefer_related_applications": false,
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Start Sleep Session",
+      "short_name": "Sleep",
+      "url": "/index.html?mode=sleep",
+      "description": "Start a deep sleep sound session"
+    },
+    {
+      "name": "Breathing Guide",
+      "short_name": "Breathe",
+      "url": "/index.html?mode=breathe",
+      "description": "Start guided breathing exercise"
+    }
+  ]
+}
