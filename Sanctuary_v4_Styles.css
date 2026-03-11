@@ -1,0 +1,364 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Sanctuary_v4_Styles.css — Sanctuary v4.7 - Artist Edition
+   6. Adım: Biyometrik Senkronizasyon — Görsel Stiller
+   ─────────────────────────────────────────────────────────────────────
+   İÇERİK:
+   1. CSS Değişkenleri    — tema, renk, nefes parametreleri
+   2. Breath Bubble       — #breath-bubble nefes balonu
+   3. Breath Label        — #breath-label faz etiketi
+   4. Breath Ring Halo    — balonun çevresindeki halka efekti
+   5. HUD Panel           — #sanctuary-hud Telemetry overlay
+   6. Faz Animasyonları   — @keyframes nefes döngüsü efektleri
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════════
+   1. CSS DEĞİŞKENLERİ
+═══════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Nefes Süresi Değişkenleri — VisualizerEngine tarafından okunur
+     4-2-7 pattern varsayılan. JS veya Maestro override edebilir.      */
+  --inhale-duration   : 4s;
+  --hold-duration     : 2s;
+  --exhale-duration   : 7s;
+
+  /* ── Renk Paleti ── */
+  --sanctuary-bg          : #07071a;
+  --sanctuary-surface     : rgba(12, 12, 30, 0.92);
+  --sanctuary-border      : rgba(201, 169, 110, 0.25);
+  --sanctuary-gold        : #c9a96e;
+  --sanctuary-text        : rgba(240, 238, 232, 0.88);
+  --sanctuary-text-dim    : rgba(200, 198, 192, 0.55);
+
+  /* ── Nefes Renkleri ── */
+  --breath-inhale-core    : rgba(100, 180, 255, 0.85);
+  --breath-inhale-glow    : rgba(80, 160, 240, 0.45);
+  --breath-hold-core      : rgba(130, 195, 255, 0.80);
+  --breath-exhale-core    : rgba(40, 80, 180, 0.70);
+  --breath-exhale-glow    : rgba(30, 60, 180, 0.25);
+  --breath-idle-core      : rgba(60, 100, 200, 0.65);
+
+  /* ── Nefes Ölçeği (JS tarafından güncellenir) ── */
+  --breath-phase          : idle;
+  --breath-scale          : 1.0;
+
+  /* ── Balonun bazal boyutu ── */
+  --bubble-size           : 140px;
+  --bubble-border-radius  : 50%;
+
+  /* ── HUD ── */
+  --hud-bg                : rgba(5, 5, 10, 0.93);
+  --hud-border            : rgba(201, 169, 110, 0.28);
+  --hud-font              : 'Courier New', 'Lucida Console', monospace;
+  --hud-font-size         : 11px;
+  --hud-line-height       : 1.65;
+  --hud-radius            : 12px;
+  --hud-padding           : 14px 18px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   2. BREATH BUBBLE — #breath-bubble
+   ─────────────────────────────────────────────────────────────────────
+   Maestro'dan gelen 4-2-7 pattern'ine göre JS tarafından
+   transform: scale() ve box-shadow animasyonu uygulanır.
+   CSS burada bazal görünümü ve konumlandırmayı sağlar.
+══════════════════════════════════════════════════════════════════════ */
+#breath-bubble {
+  /* Boyut & Şekil */
+  width             : var(--bubble-size);
+  height            : var(--bubble-size);
+  border-radius     : var(--bubble-border-radius);
+
+  /* Bazal Renk — JS faz geçişleriyle üzerine yazılır */
+  background-color  : var(--breath-idle-core);
+
+  /* Bazal Glow */
+  box-shadow        :
+    0 0 20px 8px  rgba(60, 100, 200, 0.30),
+    0 0 50px 20px rgba(40, 80, 180, 0.15),
+    inset 0 0 20px rgba(100, 150, 255, 0.12);
+
+  /* Konum */
+  position          : relative;
+  display           : flex;
+  align-items       : center;
+  justify-content   : center;
+
+  /* Başlangıç transform */
+  transform         : scale(1.0);
+  transform-origin  : center center;
+
+  /* JS geçişi yoksa CSS fallback — JS transition'ı override eder */
+  will-change       : transform, box-shadow, background-color;
+
+  /* [v4.7 Artist Edition] Sürekli pulsing glow — canlılık hissi */
+  animation         : bubble-pulsing-glow 3.8s ease-in-out infinite;
+
+  /* İç içerik seçimi engelle */
+  user-select       : none;
+  -webkit-user-select: none;
+
+  /* Cursor */
+  cursor            : default;
+}
+
+/* Faz sınıfları — JS setAttribute('data-breath-phase') ile tetiklenir */
+#breath-bubble[data-breath-phase="inhale"] {
+  --bubble-glow-color: var(--breath-inhale-glow);
+}
+
+#breath-bubble[data-breath-phase="exhale"] {
+  --bubble-glow-color: var(--breath-exhale-glow);
+}
+
+/* İç halka efekti — ::before pseudo */
+#breath-bubble::before {
+  content           : '';
+  position          : absolute;
+  inset             : -12px;
+  border-radius     : 50%;
+  border            : 1px solid rgba(100, 180, 255, 0.18);
+  animation         : bubble-ring-pulse 4s ease-in-out infinite;
+  pointer-events    : none;
+}
+
+/* Dış halka efekti — ::after pseudo */
+#breath-bubble::after {
+  content           : '';
+  position          : absolute;
+  inset             : -28px;
+  border-radius     : 50%;
+  border            : 1px solid rgba(80, 140, 220, 0.10);
+  animation         : bubble-ring-pulse 4s ease-in-out infinite 0.6s;
+  pointer-events    : none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   3. BREATH LABEL — #breath-label
+   ─────────────────────────────────────────────────────────────────────
+   Balonun içinde veya altında görünen faz metni:
+   "Nefes Al" / "Tut" / "Bırak"
+══════════════════════════════════════════════════════════════════════ */
+#breath-label {
+  position          : absolute;
+  bottom            : -36px;
+  left              : 50%;
+  transform         : translateX(-50%);
+
+  font-family       : 'Georgia', 'Times New Roman', serif;
+  font-size         : 13px;
+  font-style        : italic;
+  letter-spacing    : 0.08em;
+  color             : var(--sanctuary-text-dim);
+  white-space       : nowrap;
+  text-align        : center;
+
+  transition        : color 0.8s ease, opacity 0.5s ease;
+  pointer-events    : none;
+}
+
+#breath-label[data-phase="inhale"] {
+  color   : rgba(140, 200, 255, 0.85);
+  opacity : 1;
+}
+
+#breath-label[data-phase="hold"] {
+  color   : rgba(160, 210, 255, 0.70);
+  opacity : 0.85;
+}
+
+#breath-label[data-phase="exhale"] {
+  color   : rgba(80, 120, 200, 0.75);
+  opacity : 1;
+}
+
+#breath-label[data-phase="idle"],
+#breath-label:empty {
+  opacity : 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   4. BREATH RING HALO — .breath-ring
+   ─────────────────────────────────────────────────────────────────────
+   Opsiyonel: Balonun dışında genişleyen halkalar için yardımcı sınıf.
+   HTML: <div class="breath-ring"></div> (balonun kardeş elementi)
+══════════════════════════════════════════════════════════════════════ */
+.breath-ring {
+  position          : absolute;
+  border-radius     : 50%;
+  border            : 1px solid rgba(100, 180, 255, 0.20);
+  animation         : breath-ring-expand 6s ease-out infinite;
+  pointer-events    : none;
+}
+
+.breath-ring:nth-child(1) { width: 160px; height: 160px; animation-delay: 0s;   opacity: 0.6; }
+.breath-ring:nth-child(2) { width: 200px; height: 200px; animation-delay: 1.5s; opacity: 0.4; }
+.breath-ring:nth-child(3) { width: 240px; height: 240px; animation-delay: 3.0s; opacity: 0.2; }
+
+/* Konteyner — balonu ve halkayı sarmak için */
+.breath-bubble-container {
+  position          : relative;
+  display           : flex;
+  align-items       : center;
+  justify-content   : center;
+  width             : 280px;
+  height            : 280px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   5. HUD PANELİ — #sanctuary-hud
+   ─────────────────────────────────────────────────────────────────────
+   SanctuaryCore.js tarafından dinamik oluşturulur.
+   Bu stiller inline style'ı tamamlar / geçersiz kılar.
+   Ctrl+Shift+D ile aç/kapat.
+══════════════════════════════════════════════════════════════════════ */
+#sanctuary-hud {
+  /* Konum */
+  position          : fixed;
+  top               : 12px;
+  right             : 12px;
+  z-index           : 99999;
+
+  /* Görünüm */
+  background        : var(--hud-bg);
+  border            : 1px solid var(--hud-border);
+  border-radius     : var(--hud-radius);
+  padding           : var(--hud-padding);
+  min-width         : 280px;
+  max-width         : 340px;
+
+  /* Yazı */
+  font-family       : var(--hud-font);
+  font-size         : var(--hud-font-size);
+  line-height       : var(--hud-line-height);
+  color             : var(--sanctuary-text);
+  white-space       : pre;
+
+  /* Efekt */
+  backdrop-filter   : blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow        :
+    0 4px 24px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(201, 169, 110, 0.08) inset;
+
+  /* Başlangıç gizli — Ctrl+Shift+D ile .active class eklenir */
+  display           : none;
+  pointer-events    : none;
+
+  /* Belirme animasyonu — .active eklenince tetiklenir */
+  transition        : opacity 0.25s ease, transform 0.25s ease;
+  opacity           : 0;
+  transform         : translateY(-6px) scale(0.98);
+}
+
+#sanctuary-hud.active {
+  display     : block;
+  opacity     : 1;
+  transform   : translateY(0) scale(1);
+  animation   : hud-fade-in 0.22s ease forwards;
+}
+
+/* HUD başlık satırı — ━━ SANCTUARY v4 HUD ━━ */
+#sanctuary-hud .hud-title {
+  color       : var(--sanctuary-gold);
+  font-weight : bold;
+  margin-bottom: 4px;
+}
+
+/* ── Nefes bölümü vurgusu ── */
+#sanctuary-hud .hud-breath-section {
+  border-left   : 2px solid rgba(100, 180, 255, 0.40);
+  padding-left  : 6px;
+  margin        : 2px 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   6. @KEYFRAMES — Animasyon tanımları
+══════════════════════════════════════════════════════════════════════ */
+
+/* Balonun iç/dış halka puls */
+@keyframes bubble-ring-pulse {
+  0%   { opacity: 0.25; transform: scale(1.00); }
+  50%  { opacity: 0.55; transform: scale(1.06); }
+  100% { opacity: 0.25; transform: scale(1.00); }
+}
+
+/* [v4.7 Artist Edition] Sürekli pulsing glow — idle durumda canlı parlama */
+@keyframes bubble-pulsing-glow {
+  0%   {
+    box-shadow:
+      0 0 20px 8px  rgba(60, 100, 200, 0.28),
+      0 0 50px 20px rgba(40, 80, 180, 0.14),
+      inset 0 0 20px rgba(100, 150, 255, 0.10);
+  }
+  50%  {
+    box-shadow:
+      0 0 32px 14px rgba(80, 130, 240, 0.42),
+      0 0 70px 30px rgba(60, 100, 220, 0.22),
+      inset 0 0 28px rgba(120, 170, 255, 0.18);
+  }
+  100% {
+    box-shadow:
+      0 0 20px 8px  rgba(60, 100, 200, 0.28),
+      0 0 50px 20px rgba(40, 80, 180, 0.14),
+      inset 0 0 20px rgba(100, 150, 255, 0.10);
+  }
+}
+
+/* Genişleyen halka efekti */
+@keyframes breath-ring-expand {
+  0%   { transform: scale(0.85); opacity: 0.60; }
+  70%  { transform: scale(1.25); opacity: 0.10; }
+  100% { transform: scale(1.40); opacity: 0.00; }
+}
+
+/* HUD belirme */
+@keyframes hud-fade-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Nefes alırken balonun hafif parlama titreşimi */
+@keyframes bubble-inhale-shimmer {
+  0%   { box-shadow: 0 0 40px 16px rgba(100,180,255,0.50); }
+  50%  { box-shadow: 0 0 55px 22px rgba(100,180,255,0.65); }
+  100% { box-shadow: 0 0 40px 16px rgba(100,180,255,0.50); }
+}
+
+/* Nefes verirken balonun derinleşme titreşimi */
+@keyframes bubble-exhale-shimmer {
+  0%   { box-shadow: 0 0 24px 8px rgba(40,80,200,0.35); }
+  50%  { box-shadow: 0 0 16px 5px rgba(30,60,180,0.25); }
+  100% { box-shadow: 0 0 24px 8px rgba(40,80,200,0.35); }
+}
+
+/* Faz geçişi — hold'da uygulanan puls */
+@keyframes bubble-hold-pulse {
+  0%   { transform: scale(1.35);  }
+  50%  { transform: scale(1.375); }
+  100% { transform: scale(1.35);  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   7. YARDIMCI — Genel Sanctuary tema elementleri
+══════════════════════════════════════════════════════════════════════ */
+
+/* Genel arka plan */
+.sanctuary-bg {
+  background        : var(--sanctuary-bg);
+  min-height        : 100vh;
+  color             : var(--sanctuary-text);
+}
+
+/* Cam yüzey — modal, kart */
+.sanctuary-glass {
+  background        : var(--sanctuary-surface);
+  border            : 1px solid var(--sanctuary-border);
+  border-radius     : 16px;
+  backdrop-filter   : blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Altın vurgu metni */
+.sanctuary-gold {
+  color: var(--sanctuary-gold);
+}
